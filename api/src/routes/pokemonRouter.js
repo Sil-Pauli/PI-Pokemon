@@ -39,26 +39,27 @@ router.get('/:id', async (req, res, next) => {
   });
 
 //   crea pokemon 
-  router.post('/', async (req, res) => {
-    const {
-      name, img, attack, defense, speed, height, weight, types,
-    } = req.body;
-  
-    const newPokemon = await Pokemon.create({
-      name, img, hp, attack, defense, speed, height, weight,
-    });
-    let typeDB = await Type.findAll({
-      where: { name: types },
-    });
-    if (!typeDB.length) { // agrego este if para verificar y cargar los types si no están el la DB
-      await getApiType();
-      typeDB = await Type.findAll({
-        where: { name: types },
+router.post('/', async (req, res, next) => {
+    try {
+      let {name, hp, attack, defense, speed, height, weight, types, image, createdInDb} = req.body;
+      let pokemonCreated = await Pokemon.create({
+        name,
+        hp,
+        attack,
+        defense,
+        speed,
+        height,
+        weight,
+        image,
+        createdInDb,
       });
+      let typesDb = await Type.findAll({ where: { name: types } });
+      pokemonCreated.addType(typesDb);
+      res.status(201).send('Pokemon creado');
+      
+    } catch (error) {
+      next(error);
     }
-    newPokemon.addType(typeDB);
-    res.send('Pokemon creado!');
   });
-  
 
 module.exports = router;
