@@ -4,7 +4,7 @@ const { Pokemon, Type } = require("../db");
 
 const router= Router();
 
-// trae los pokemon y los datos necesarios
+// // // trae los pokemon y los datos necesarios
 router.get("/", async  (req, res, next) => {
     try {
         const { name } = req.query;
@@ -19,10 +19,11 @@ router.get("/", async  (req, res, next) => {
         }
     } catch (error) {
         next(error)
+        console.log(error)
     }
 });
 
-// trae los datos por id, detalles
+// // // trae los datos por id, detalles
 router.get('/:id', async (req, res, next) => {
     try {
       const{ id } = req.params;
@@ -38,10 +39,10 @@ router.get('/:id', async (req, res, next) => {
     }
   });
 
-//   crea pokemon 
+// //   crea pokemon 
 router.post('/', async (req, res, next) => {
     try {
-      let {name, hp, attack, defense, speed, height, weight, types, image, createdInDb} = req.body;
+      let {name, hp, attack, defense, speed, height, weight, type, img, createdInDb} = req.body;
       let pokemonCreated = await Pokemon.create({
         name,
         hp,
@@ -50,15 +51,16 @@ router.post('/', async (req, res, next) => {
         speed,
         height,
         weight,
-        image,
+        img,
         createdInDb,
       });
-      let typesDb = await Type.findAll({ where: { name: types } });
+      let typesDb = await Type.findAll({ where: { name: type } });
       pokemonCreated.addType(typesDb);
       res.status(201).send('Pokemon creado');
       
     } catch (error) {
       next(error);
+      console.log(error);
     }
   });
 

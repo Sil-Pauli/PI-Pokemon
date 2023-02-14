@@ -2,34 +2,31 @@ const axios = require('axios');
 const { Type } = require('../db.js');
 const { API_TYPE} = process.env;
 
-// async function getAllTypeApi(req, res, next) {
-//    try{
-//     const allTypes = await axios.get(API_TYPE);
-//     const types = allTypes.data.map(e => e.name);
-//     const typesEach= types.forEach( type => {
-//         Type.findOrCreate({
-//             where: { 
-//                 name: type 
-//             }
-//         });
-//     });
-//     return res.json(await Type.findAll());
-// } catch (error) {
-// next(error);
-// }
-// };
 
 const getApiType = async () => {
+  try{
     const typeApi = await axios.get(API_TYPE);
-    const types = typeApi.data.results;
-    types.forEach((type) => {
+    const types = await typeApi.data.results.map((data)=>
+    axios.get(data.url),
+    );
+    const typeResponse = await axios.all(types).then((r)=>
+    r.map((p)=>{
+      const typeAll= {
+        id: p.data.id,
+        name: p.data.name,
+      };
       Type.findOrCreate({
-        where: { name: type.name },
+        where: { name: p.data.name },
       });
-    });
-    const allTypes = await Type.findAll();
-    return allTypes;
-  };
+      return typeAll
+    })
+    );
+    return typeResponse;
+  }catch(error){
+    res.status(400)({error: error.message})
+  }
+}
+
 module.exports = {
     getApiType
   }
