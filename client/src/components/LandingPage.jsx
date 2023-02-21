@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './LandingPage.module.css';
+// import styles from './LandingPage.module.css';
 
 
 const LandingPage = () => {
@@ -8,7 +8,7 @@ const LandingPage = () => {
         <div>
             <h1>Welcome to my Pokemon page!</h1>
             <Link to='/home'>
-                <button>Start</button>
+                <button>Comenzar</button>
             </Link>
         </div>
     )
