@@ -1,172 +1,130 @@
-import {
-    GET_POKEMONS,
-    GET_POKEMON_BY_NAME, 
-    GET_POKEMON_DETAIL,
-    GET_TYPES,
-    POST_POKEMON, 
-    DELETE_POKEMON,
-    FILTER_BY_TYPE, 
-    FILTER_CREATED, 
-    SET_FILTER,
-    SET_SORT,
-    SET_ORDER,
-    CLEAN_FILTER,
-    CLEAN_SORT,
-    CLEAN_DETAIL,
-    CLEAN_ORDER,
-    CLEAN_SELECTED_FILTER
-} from "../actions";
-
 const initialState = {
-    allPokemons: [],
-    detail: [],
-    types: [],
-    sort: '',
-    order: '',
-    filter: '',
-    selectedFilter: '',
-}
+  allPokemons: [],
+  filteredPokemons: [],
+  addedPokemon: false,
+  pokemonById: [],
+  pokemonTypes: [],
+};
 
-const sortPokemons = (pokemons, prop, order) => {
-    if (order === 'asc'){
-        return (pokemons.sort((a,b) => {
-            if (a[prop] > b[prop]) return 1;
-            if (a[prop] < b[prop]) return -1;
-            return 0;
-        }))
-    }
-    if (order === 'desc'){
-        return (pokemons.sort((a,b) => {
-            if (a[prop] > b[prop]) return -1;
-            if (a[prop] < b[prop]) return 1;
-            return 0;
-        }))
-    }
-}
-function rootReducer(state=initialState, action){
-    switch (action.type) {
-        case GET_POKEMONS: //viene del /action/index.jsx
-            return {
-                ...state,
-                pokemons: action.payload,
-                allPokemons: action.payload 
-                // allpokemons esta como un arreglo vacio, y con este return le mandamos todo lo que trae la accion GET_POKEMONS
-            }
-            case GET_POKEMON_BY_NAME:
-                return {
-                    ...state,
-                    pokemons: action.payload
-                }
-            case GET_POKEMON_DETAIL:
-                return {
-                    ...state,
-                    detail: action.payload
-                }
-            case GET_TYPES:
-                return{
-                    ...state,
-                    types: action.payload
-                }
-            
-            case POST_POKEMON:
-                return {
-                    ...state,
-                }
-            
-            case DELETE_POKEMON:
-                return {
-                    ...state,
-                }    
-                
-            case FILTER_BY_TYPE:
-                const allPokemons = state.allPokemons;
-                const filterByType = (types) => {
-                    for(let type of types){
-                        if (type.name === action.payload){
-                            return true
-                        }
-                    }
-                }
-                const pokemonsFiltered = allPokemons.filter(e => filterByType(e.types));
-                const statusFiltered = action.payload === 'All' ? allPokemons : pokemonsFiltered
-                return {
-                    ...state,
-                    pokemons: statusFiltered,
-                    selectedFilter: action.payload
-                } 
-            
-            case FILTER_CREATED:
-                const allPokemons2 = state.allPokemons;
-                const createdFilter = () => {
-                    if (action.payload === 'All'){
-                        return allPokemons2
-                    } else if (action.payload === 'created'){
-                        return allPokemons2.filter(e => e.createdInDb)
-                    } else {
-                        return allPokemons2.filter(e => !e.createdInDb)
-                    }
-                }
-                return {
-                    ...state,
-                    pokemons: createdFilter(),
-                    selectedFilter: action.payload
-                }
-    
-            case SET_FILTER:
-                return {
-                    ...state,
-                    filter: action.payload,
-                }
-    
-            case SET_SORT: 
-                return {
-                    ...state,
-                    sort: action.payload,
-                }
-    
-            case SET_ORDER:  
-                state.order = action.payload    
-                sortPokemons(state.pokemons, state.sort, state.order)
-                return {
-                    ...state,
-                    order: action.payload,
-                }
-            
-            case CLEAN_FILTER:
-                return {
-                    ...state,
-                    filter: ''
-                }
-            
-            case CLEAN_SELECTED_FILTER:
-                return { 
-                    ...state,
-                    selectedFilter: ''
-                }
-            
-            case CLEAN_SORT:
-                return {
-                    ...state,
-                    sort: ''
-                }
-            
-            case CLEAN_ORDER:
-                return { 
-                    ...state,
-                    order: ''
-                }
-            
-            case CLEAN_DETAIL:
-                return {
-                    ...state,
-                    detail: []
-                }
-            
-            default: 
-                return state
-    }
-}
+const rootReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "ADD_POKEMON":
+      return {
+        ...state,
+        addedPokemon: action.payload,
+      };
+    case "CLEAR_POKEMON_BY_ID":
+      return {
+        ...state,
+        pokemonById: [],
+      };
+    case "CLEAR_STATE":
+      return {
+        ...state,
+        filteredPokemons: state.allPokemons,
+        addedPokemon: false,
+      };
+    case "FILTER_BY_TYPE":
+      const typeFiltered = state.allPokemons.filter((p) => {
+        return p.types.some((type) => type.name === action.payload);
+      });
+      if (typeFiltered.length) {
+        return {
+          ...state,
+          filter: true,
+          filteredPokemons: typeFiltered,
+        };
+      } else {
+        return {
+          ...state,
+          filteredPokemons: false,
+        };
+      }
 
+    case "FILTER_BY_CREATOR":
+      const filteredCreator = state.allPokemons.filter((p) => {
+        return p.created.toString() === action.payload;
+      });
+      if (filteredCreator.length) {
+        return {
+          ...state,
+          filteredPokemons: filteredCreator,
+        };
+      } else {
+        return {
+          ...state,
+          filteredPokemons: false,
+        };
+      }
+    case "GET_ALL_POKEMONS":
+      return {
+        ...state,
+        allPokemons: action.payload,
+        filteredPokemons: action.payload,
+      };
+    case "GET_POKEMON_BY_ID":
+      return {
+        ...state,
+        pokemonById: action.payload,
+      };
+    case "GET_POKEMON_BY_NAME":
+      let search;
+      if (action.payload.length === 0) {
+        search = ["error"];
+      } else {
+        search = action.payload;
+      }
+      return {
+        ...state,
+        filteredPokemons: search,
+      };
 
+    case "GET_POKEMON_TYPES":
+      return {
+        ...state,
+        pokemonTypes: [...action.payload],
+      };
+
+    case "ORDER_ASCENDING":
+      return {
+        ...state,
+        filteredPokemons: state.filteredPokemons.sort((a, b) => {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
+        }),
+      };
+    case "ORDER_DESCENDING":
+      return {
+        ...state,
+        filteredPokemons: state.filteredPokemons.sort((a, b) => {
+          if (a.name > b.name) return -1;
+          if (a.name < b.name) return 1;
+          return 0;
+        }),
+      };
+    case "ORDER_ATTACK_ASCENDING":
+      return {
+        ...state,
+        filteredPokemons: state.filteredPokemons.sort((a, b) => {
+          if (a.attack > b.attack) return -1;
+          if (a.attack < b.attack) return 1;
+          return 0;
+        }),
+      };
+    case "ORDER_ATTACK_DESCENDING":
+      return {
+        ...state,
+        filteredPokemons: state.filteredPokemons.sort((a, b) => {
+          if (a.attack < b.attack) return -1;
+          if (a.attack > b.attack) return 1;
+          return 0;
+        }),
+      };
+
+    default:
+      return state;
+  }
+};
 
 export default rootReducer;

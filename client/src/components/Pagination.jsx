@@ -1,30 +1,107 @@
-import React from 'react';
-import styles from './Pagination.module.css';
+import React, { useEffect, useState } from "react";
+import "./Pagination.module.css";
+// import Loading from "../../assets/loading-L-H.gif";
+// import NotFound from "../../assets/bulbasour.gif";
+import Pokemon from "./CardPokemon.jsx";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllPokemons, getPokemonTypes } from "../redux/actions/index";
 
+const Pagination = () => {
+  const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pokemonsPerPage] = useState(15);
+  const indexOfLastPost = currentPage * pokemonsPerPage;
+  const indexOfFirstPost = indexOfLastPost - pokemonsPerPage;
 
-const Pagination = ({pokemonPerPage, allPokemon, pagination, currentPage}) => {
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(allPokemon/pokemonPerPage); i++){
-    pageNumbers.push(i);
-  }
-  return (
-      <nav>
-        <ul className={styles.pagination} >
-          {pageNumbers &&
-            pageNumbers.map((number, i) => {
-              return <li className={styles.number} key={number}>
-              <button 
-                key={i} 
-                className={`${styles.button} ${number === currentPage ? styles.active : ''}`} 
-                onClick={() => pagination(number)}>
-                {number}
-              </button>
-              </li>
-            })}
-        </ul>
-    </nav>
+  const totalPokemons = useSelector((state) => state.filteredPokemons);
+  const totalPages = Math.ceil(totalPokemons.length / pokemonsPerPage);
+
+  const showPokemons = useSelector((state) =>
+    state.filteredPokemons
+      ? state.filteredPokemons.slice(indexOfFirstPost, indexOfLastPost)
+      : false
   );
+
+  useEffect(() => {
+    dispatch(getAllPokemons());
+    dispatch(getPokemonTypes());
+  }, [dispatch]);
+
+  // paginacion
+
+  const previousPage = () => {
+    if (currentPage === 1) return;
+    setCurrentPage(currentPage - 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const nextPage = () => {
+    if (currentPage === totalPages) return;
+    setCurrentPage(currentPage + 1);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  if (currentPage > totalPages) previousPage();
+
+  if (showPokemons[0] === "error" || !showPokemons) {
+    return (
+      <div className="notFound">
+        {/* <img src={NotFound} alt="Not Found Pikachu" /> */}
+        <h1>Nothing was found...</h1>
+      </div>
+    );
+  } else if (showPokemons.length) {
+    return (
+      <div>
+        <div className="container__gral">
+          <div className="pokem">
+            {showPokemons &&
+              showPokemons.map((p) => (
+                <Link
+                  key={p.id}
+                  to={`pokemon/${p.id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <Pokemon
+                    name={p.name}
+                    types={p.types}
+                    image={p.image}
+                    hp={p.hp}
+                    attack={p.attack}
+                    defense={p.defense}
+                    speed={p.speed}
+                    key={p.id}
+                  />
+                </Link>
+              ))}
+          </div>
+        </div>
+        <div className="pagination">
+          <div className="frame">
+            <button className="custom-btn btn-2" onClick={previousPage}>
+              {" "}
+              &laquo;{" "}
+            </button>
+          </div>
+          <div>
+            <h4>
+              {currentPage} / {totalPages}
+            </h4>
+          </div>
+          <div className="frame">
+            <button className="custom-btn btn-2" onClick={nextPage}>
+              &raquo;
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="loading__l-h">
+        {/* <img className="loading__img" src={Loading} alt="Loading" /> */}
+      </div>
+    );
+  }
 };
-
-
-export default Pagination
+export default Pagination;
