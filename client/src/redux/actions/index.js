@@ -1,13 +1,15 @@
 import axios from "axios";
 
 
-// Get
-
+// TRAE LOS POKEMON DEL BACK
 export function getAllPokemons() {
   return async function (dispatch) {
     try {
+      // CONECCION DE FRONT Y EL BACK
       const response = await axios.get('http://localhost:3001/pokemon/');
-      dispatch({ type: "GET_ALL_POKEMONS", payload: response.data });
+      return dispatch({ 
+        type: "GET_ALL_POKEMONS", 
+        payload: response.data });
     } catch (error) {
       console.log("Get all pokemons:", error);
     }
@@ -18,7 +20,9 @@ export function getPokemonTypes() {
   return async function (dispatch) {
     try {
       const response = await axios.get('http://localhost:3001/tipo');
-      dispatch({ type: "GET_POKEMON_TYPES", payload: response.data });
+      return dispatch({ 
+        type: "GET_POKEMON_TYPES", 
+        payload: response.data });
     } catch (error) {
       console.log("Get pokemon types:", error);
     }
@@ -46,10 +50,14 @@ export function getPokemonById(id) {
   return async function (dispatch) {
     try {
       const response = await axios.get(`http://localhost:3001/pokemon/${id}`);
-      dispatch({ type: "GET_POKEMON_BY_ID", payload: response.data });
+      dispatch({ 
+        type: "GET_POKEMON_BY_ID", 
+        payload: response.data });
     } catch (error) {
       console.log(error);
-      dispatch({ type: "GET_POKEMON_BY_ID", payload: null });
+      dispatch({ 
+        type: "GET_POKEMON_BY_ID", 
+        payload: null });
     }
   };
 }

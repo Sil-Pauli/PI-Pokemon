@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const LandingPage = () => {
     return (
         <div>
-            <h1>Bienvenidos a mi Pokemon page!</h1>
+            <h1>Quien es ese POKEMON ?</h1>
             <Link to='/home'>
                 <button>Comenzar</button>
             </Link>

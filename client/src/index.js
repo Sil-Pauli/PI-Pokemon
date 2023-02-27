@@ -9,7 +9,8 @@ import  store  from "./redux/store/index";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
+    {/* provider para que redux funcione  */}
+    <Provider store={store}> 
       <BrowserRouter>
         <App />
       </BrowserRouter>

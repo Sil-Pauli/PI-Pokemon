@@ -20,7 +20,7 @@ const PokemonDepth = () => {
     return (
       <div className="loading__id">
         <div>
-          <img className="loadin__img" src={Loading} alt="Loading" />
+          {/* <img className="loadin__img" src={Loading} alt="Loading" /> */}
         </div>
       </div>
     );
@@ -29,7 +29,7 @@ const PokemonDepth = () => {
     return (
       <div className="container__pokemon">
         <div className="id__card">
-          <img className="logo__id" src={LOGO} alt="Pokemon" />
+          {/* <img className="logo__id" src={LOGO} alt="Pokemon" /> */}
           <div>
             <div className="pokemon__id">
               <img

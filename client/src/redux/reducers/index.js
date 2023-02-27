@@ -8,6 +8,12 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "GET_ALL_POKEMONS":
+      return {
+        ...state,
+        allPokemons: action.payload,
+        filteredPokemons: action.payload,
+      };
     case "ADD_POKEMON":
       return {
         ...state,
@@ -56,12 +62,6 @@ const rootReducer = (state = initialState, action) => {
           filteredPokemons: false,
         };
       }
-    case "GET_ALL_POKEMONS":
-      return {
-        ...state,
-        allPokemons: action.payload,
-        filteredPokemons: action.payload,
-      };
     case "GET_POKEMON_BY_ID":
       return {
         ...state,
@@ -100,7 +100,7 @@ const rootReducer = (state = initialState, action) => {
         filteredPokemons: state.filteredPokemons.sort((a, b) => {
           if (a.name > b.name) return -1;
           if (a.name < b.name) return 1;
-          return 0;
+          return 0; //si son iguales te lo deja como esta
         }),
       };
     case "ORDER_ATTACK_ASCENDING":

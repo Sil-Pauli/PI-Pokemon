@@ -224,8 +224,8 @@ const AddPokemon = () => {
                   alt={input.name}
                 ></img>
               ) : (
-                <img className="img-size" src={Img} alt="New Pokemon"></img>
-              )}
+                <img className=""  alt="New Pokemon"></img>
+            )}
 
               <div className="container-name">
                 {input.name && <h3>{input.name}</h3>}
