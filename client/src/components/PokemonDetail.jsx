@@ -24,8 +24,7 @@ const PokemonDepth = () => {
         </div>
       </div>
     );
-  } else {
-    // console.log(pokemonByID);
+  } else { 
     return (
       <div className="container__pokemon">
         <div className="id__card">
@@ -51,31 +50,31 @@ const PokemonDepth = () => {
               {/* ================= */}
               <div className="details_poke">
                 <div>
-                  <p className="emojis">🩸 health {pokemonByID.hp}</p>
+                  <p className="emojis"> health {pokemonByID.hp}</p>
                   <progress max="100" value={pokemonByID.hp}></progress>
                 </div>
                 <div>
-                  <p className="emojis">💨 speed {pokemonByID.speed}</p>
+                  <p className="emojis">speed {pokemonByID.speed}</p>
                   <progress max="100" value={pokemonByID.speed}></progress>
                 </div>
                 <div>
-                  <p className="emojis">🗡 attack {pokemonByID.attack}</p>
+                  <p className="emojis">attack {pokemonByID.attack}</p>
                   <progress max="100" value={pokemonByID.attack}></progress>
                 </div>
                 <div>
-                  <p className="emojis">🛡 defense {pokemonByID.defense}</p>
+                  <p className="emojis"> defense {pokemonByID.defense}</p>
                   <progress max="100" value={pokemonByID.defense}></progress>
                 </div>
                 <div>
-                  <p className="emojis">📏 height {pokemonByID.height}</p>
+                  <p className="emojis"> height {pokemonByID.height}</p>
                   <progress max="100" value={pokemonByID.height}></progress>
                 </div>
                 <div>
-                  <p className="emojis">🟣 weight {pokemonByID.weight}</p>
+                  <p className="emojis"> weight {pokemonByID.weight}</p>
                   <progress max="100" value={pokemonByID.weight}></progress>
                 </div>
               </div>
-              {/* ========== */}
+             
             </div>
           </div>
           <div className="type__poke">

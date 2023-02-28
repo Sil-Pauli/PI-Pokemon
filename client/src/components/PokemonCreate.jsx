@@ -18,8 +18,7 @@ const AddPokemon = () => {
   const [input, setInput] = useState({
     name: "",
     image: "",
-    type1: "",
-    type2: "",
+    type: [], 
     height: "",
     weight: "",
     hp: "",
@@ -50,8 +49,7 @@ const AddPokemon = () => {
     setInput({
       name: "",
       image: "",
-      type1: "",
-      type2: "",
+      type: [],
       height: "",
       weight: "",
       hp: "",
@@ -70,8 +68,7 @@ const AddPokemon = () => {
 
   return (
     <section>
-      <h6>Let your imagination fly</h6>
-      <h2 className="title">Create Pokemon</h2>
+      <h2 className="title">Crea tu Pokemon</h2>
       <div className="container container__create">
         <form onSubmit={handleSubmit}>
           <div className="textInputWrapper ">
@@ -102,7 +99,7 @@ const AddPokemon = () => {
               className="textInput"
               name="type1"
               onChange={handleInputChange}
-              value={input.type1}
+              value={input.type}
             >
               <option value="type1">Type 1</option>
               {types &&
@@ -232,37 +229,37 @@ const AddPokemon = () => {
               </div>
               {input.height && (
                 <div className="container-view">
-                  <p>📏 height {input.height}</p>
+                  <p>height {input.height}</p>
                   <progress max="100" value={input.height}></progress>
                 </div>
               )}
               {input.weight && (
                 <div className="container-view">
-                  <p>🟣 weight {input.weight}</p>
+                  <p>weight {input.weight}</p>
                   <progress max="100" value={input.weight}></progress>
                 </div>
               )}
               {input.hp && (
                 <div className="container-view">
-                  <p>🩸 health {input.hp}</p>
+                  <p>health {input.hp}</p>
                   <progress max="100" value={input.hp}></progress>
                 </div>
               )}
               {input.attack && (
                 <div className="container-view">
-                  <p>🗡 attack {input.attack}</p>
+                  <p>attack {input.attack}</p>
                   <progress max="100" value={input.attack}></progress>
                 </div>
               )}
               {input.defense && (
                 <div className="container-view">
-                  <p>🛡 defense {input.defense}</p>
+                  <p>defense {input.defense}</p>
                   <progress max="100" value={input.defense}></progress>
                 </div>
               )}
               {input.speed && (
                 <div className="container-view">
-                  <p>💨 speed {input.speed}</p>
+                  <p>speed {input.speed}</p>
                   <progress max="100" value={input.speed}></progress>
                 </div>
               )}
@@ -295,17 +292,8 @@ export const validateForm = (input) => {
   let errors = {};
   if (!input.name) {
     errors.name = "Name is required";
-  } else if (!/^[A-Za-z]+$/.test(input.name)) {
+  } else if (input.name) {
     errors.name = "Name must be plain text";
-  }
-  if (!input.image) {
-    errors.image = "Image is required";
-  } else if (
-    !/(https:\/\/)([^\s(["<,>/]*)(\/)[^\s[",><]*(.png|.jpg|.svg)(\?[^\s[",><]*)?/.test(
-      input.image
-    )
-  ) {
-    errors.image = "An URL of an image is required";
   }
 
   if (!input.type1 || input.type1 === "type1") {
@@ -316,39 +304,33 @@ export const validateForm = (input) => {
   }
   if (!input.height) {
     errors.height = "Height is required";
-  } else if (!/^([1-9]\d{0,2}|1000)$/.test(input.height)) {
+  } else if(input.height) {
     errors.height = "Height must be between 1 and 1000";
   }
   if (!input.weight) {
     errors.weight = "Weight is required";
-  } else if (!/^([1-9]\d{0,2}|1000)$/.test(input.weight)) {
+  } else if (input.weight) {
     errors.weight = "Weight must be between 1 and 1000";
   }
 
   if (!input.hp) {
     errors.hp = "Hp is required";
-  } else if (!/^([0-9]{1,2}|1[0-9]{1,2}|2[0-4][0-9]|25[0-5])$/.test(input.hp)) {
+  } else if (input.hp) {
     errors.hp = "Hp must be between 1 and 255";
   }
   if (!input.attack) {
     errors.attack = "Attack is required";
-  } else if (
-    !/^([0-9]{1,2}|1[0-9]{1,2}|2[0-4][0-9]|25[0-5])$/.test(input.attack)
-  ) {
+  } else if (input.attack){
     errors.attack = "Attack must be between 1 and 255";
   }
   if (!input.defense) {
     errors.defense = "Defense is required";
-  } else if (
-    !/^([0-9]{1,2}|1[0-9]{1,2}|2[0-4][0-9]|25[0-5])$/.test(input.defense)
-  ) {
+  } else if(input.defense) {
     errors.defense = "Defense must be between 1 and 255";
   }
   if (!input.speed) {
     errors.speed = "Speed is required";
-  } else if (
-    !/^([0-9]{1,2}|1[0-9]{1,2}|2[0-4][0-9]|25[0-5])$/.test(input.speed)
-  ) {
+  } else if (input.speed){
     errors.speed = "Speed must be between 1 and 255";
   }
 

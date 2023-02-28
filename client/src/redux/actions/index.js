@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-// TRAE LOS POKEMON DEL BACK
+// TRAE LOS POKEMON DEL BACK (paginado)
 export function getAllPokemons() {
   return async function (dispatch) {
     try {
@@ -15,7 +15,7 @@ export function getAllPokemons() {
     }
   };
 }
-
+// trae del back los tipos de poke (filtrado)
 export function getPokemonTypes() {
   return async function (dispatch) {
     try {
@@ -28,7 +28,7 @@ export function getPokemonTypes() {
     }
   };
 }
-
+// trae del back los nombres del poke  (buscador)
 export function getPokemonByName(payload) {
   return async function (dispatch) {
     try {
@@ -45,7 +45,7 @@ export function getPokemonByName(payload) {
     }
   };
 }
-
+// trae los poke por id (detallee)
 export function getPokemonById(id) {
   return async function (dispatch) {
     try {
@@ -82,7 +82,7 @@ export function addPokemon(pokemon) {
   return async function (dispatch) {
     try {
       dispatch({ type: "ADD_POKEMON", payload: true });
-      await axios.post(`${URL}/pokemons`, pokemon);
+      await axios.post('http://localhost:3001/pokemon/?name=', pokemon);
     } catch (error) {
       console.log(error);
       dispatch({ type: "ADD_POKEMON", payload: false });
