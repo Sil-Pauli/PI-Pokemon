@@ -1,14 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import styles from './LandingPage.module.css';
+import landing from'./LandingPage.module.css';
+import LOGO from "../img/logo.svg.webp";
 
 
 const LandingPage = () => {
     return (
-        <div>
-            <h1>Quien es ese POKEMON ?</h1>
+        <div className={landing.container}>
+            <div className={landing.logo}>
+          <img className="img" src={LOGO} alt="pokemon" />
+        </div>
             <Link to='/home'>
-                <button>Comenzar</button>
+                <button className={landing.button}>Comenzar</button>
             </Link>
         </div>
     )
