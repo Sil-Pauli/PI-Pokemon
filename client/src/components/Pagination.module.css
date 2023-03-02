@@ -1,0 +1,49 @@
+.pokem {
+    display: grid;
+    margin-top: 120px;
+    grid-template-columns: repeat(4, 13rem);
+    gap: auto;
+    justify-content: center;
+    position: relative;
+    width: auto;
+    color: #fff;
+    padding: 20px;
+}
+
+.pagination {
+    bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .num{
+    margin: 10px;
+  }
+  .btn {
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(53, 53, 53, 0.5),
+      7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+    outline: none;
+  }
+  .frame {
+    width: 5%;
+    text-align: center;
+  }
+  
+  .btn:before {
+    height: 0%;
+    width: 2px;
+  }
+  .btn:hover {
+    box-shadow: 0 14px 20px rgba(0, 0, 0, 0.4), 0 10px 10px rgba(0, 0, 0, 0.3);
+  }

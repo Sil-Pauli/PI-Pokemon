@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import "./PokemonCreate.module.css";
-// import Img from "../../assets/add_provisional.png";
+import { Link} from "react-router-dom";
+// import style from"./PokemonCreate.module.css";
+import Img from "../img/add_provisional.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemonTypes, addPokemon, clearState } from "../redux/actions/index";
 
@@ -18,7 +18,8 @@ const AddPokemon = () => {
   const [input, setInput] = useState({
     name: "",
     image: "",
-    type: [], 
+    type1: "",
+    type2: "",
     height: "",
     weight: "",
     hp: "",
@@ -49,7 +50,8 @@ const AddPokemon = () => {
     setInput({
       name: "",
       image: "",
-      type: [],
+      type1: "",
+      type2: "",
       height: "",
       weight: "",
       hp: "",
@@ -68,7 +70,8 @@ const AddPokemon = () => {
 
   return (
     <section>
-      <h2 className="title">Crea tu Pokemon</h2>
+      <h6>Let your imagination fly</h6>
+      <h2 className="title">Create Pokemon</h2>
       <div className="container container__create">
         <form onSubmit={handleSubmit}>
           <div className="textInputWrapper ">
@@ -99,7 +102,7 @@ const AddPokemon = () => {
               className="textInput"
               name="type1"
               onChange={handleInputChange}
-              value={input.type}
+              value={input.type1}
             >
               <option value="type1">Type 1</option>
               {types &&
@@ -221,8 +224,8 @@ const AddPokemon = () => {
                   alt={input.name}
                 ></img>
               ) : (
-                <img className=""  alt="New Pokemon"></img>
-            )}
+                <img className="img-size" src={Img} alt="New Pokemon"></img>
+              )}
 
               <div className="container-name">
                 {input.name && <h3>{input.name}</h3>}
@@ -292,8 +295,17 @@ export const validateForm = (input) => {
   let errors = {};
   if (!input.name) {
     errors.name = "Name is required";
-  } else if (input.name) {
+  } else if (!/^[A-Za-z]+$/.test(input.name)) {
     errors.name = "Name must be plain text";
+  }
+  if (!input.image) {
+    errors.image = "Image is required";
+  } else if (
+    !/(https:\/\/)([^\s(["<,>/]*)(\/)[^\s[",><]*(.png|.jpg|.svg)(\?[^\s[",><]*)?/.test(
+      input.image
+    )
+  ) {
+    errors.image = "An URL of an image is required";
   }
 
   if (!input.type1 || input.type1 === "type1") {
@@ -304,33 +316,39 @@ export const validateForm = (input) => {
   }
   if (!input.height) {
     errors.height = "Height is required";
-  } else if(input.height) {
+  } else if (!/^([1-9]\d{0,2}|1000)$/.test(input.height)) {
     errors.height = "Height must be between 1 and 1000";
   }
   if (!input.weight) {
     errors.weight = "Weight is required";
-  } else if (input.weight) {
+  } else if (!/^([1-9]\d{0,2}|1000)$/.test(input.weight)) {
     errors.weight = "Weight must be between 1 and 1000";
   }
 
   if (!input.hp) {
     errors.hp = "Hp is required";
-  } else if (input.hp) {
+  } else if (!/^([0-9]{1,2}|1[0-9]{1,2}|2[0-4][0-9]|25[0-5])$/.test(input.hp)) {
     errors.hp = "Hp must be between 1 and 255";
   }
   if (!input.attack) {
     errors.attack = "Attack is required";
-  } else if (input.attack){
+  } else if (
+    !/^([0-9]{1,2}|1[0-9]{1,2}|2[0-4][0-9]|25[0-5])$/.test(input.attack)
+  ) {
     errors.attack = "Attack must be between 1 and 255";
   }
   if (!input.defense) {
     errors.defense = "Defense is required";
-  } else if(input.defense) {
+  } else if (
+    !/^([0-9]{1,2}|1[0-9]{1,2}|2[0-4][0-9]|25[0-5])$/.test(input.defense)
+  ) {
     errors.defense = "Defense must be between 1 and 255";
   }
   if (!input.speed) {
     errors.speed = "Speed is required";
-  } else if (input.speed){
+  } else if (
+    !/^([0-9]{1,2}|1[0-9]{1,2}|2[0-4][0-9]|25[0-5])$/.test(input.speed)
+  ) {
     errors.speed = "Speed must be between 1 and 255";
   }
 

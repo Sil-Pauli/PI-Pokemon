@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Pagination.module.css";
+import styles from"./Pagination.module.css";
 // import Loading from "../../assets/loading-L-H.gif";
 import CardPokemon from "./CardPokemon.jsx";
 import { Link } from "react-router-dom";
@@ -44,8 +44,8 @@ const Pagination = () => {
   if (currentPokemons.length) {
     return (
       <div>
-        <div className="container__gral">
-          <div className="pokem">
+        <div className={styles.container}>
+          <div className={styles.pokem}>
             {currentPokemons &&
               currentPokemons.map((p) => (
                 <Link
@@ -67,23 +67,24 @@ const Pagination = () => {
               ))}
           </div>
         </div>
-        <div className="pagination">
-          <div className="frame">
-            <button className="custom-btn btn-2" onClick={previousPage}>
+        <div className={styles.pagination}>
+          <div className={styles.freme}>
+            <button className={styles.btn} onClick={previousPage}>
               {" "}
               &laquo;{" "}
             </button>
           </div>
           <div>
-            <h4>
+            <h4 className={styles.num}>
               {/* numero de pagina sobre el total de paginas */}
               {currentPage} / {totalPages}
             </h4>
-          </div>
-          <div className="frame">
-            {/* proxima pagina */}
-            <button className="custom-btn btn-2" onClick={nextPage}> 
-              &raquo;
+          </div> 
+          {/* proxima pagina */}
+          <div className={styles.freme}>
+           <button className={styles.btn} onClick={nextPage}> 
+           {" "}
+              &raquo;{" "}
             </button>
           </div>
         </div>
@@ -92,8 +93,7 @@ const Pagination = () => {
   } else {
     // gif de cargando
     return (
-      <div className="loading__l-h">
-        {/* <img className="loading__img" src={Loading} alt="Loading" /> */}
+      <div className={styles.cargando}>
       </div>
     );
   }

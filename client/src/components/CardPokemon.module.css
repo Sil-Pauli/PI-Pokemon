@@ -16,24 +16,27 @@
 
   .name {
     text-align: center;
-    font-size: 2rem;
-  
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+    text-transform:uppercase
   }
   
   .img {
     width: 180px;
     height: 180px;
+    color: white;
    
   }
   
   .typeStyle {
-    font-size: 1.5rem;
+    font-size: 1rem;
     list-style-type: none;
     text-decoration-line: none;
     display: inline;
     padding-left: 3px;
     padding-right: 3px;
-    font-family: 'Merienda', cursive;
+    color: white;
     font-weight: bold;
   }
   
