@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Filter.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import {
   getPokemonTypes,
   orderPokemon,
@@ -116,11 +116,7 @@ const Filter = () => {
             </button>
           </div>
 
-          <div>
-            <Link to="/create">
-              <p className="menu-menu">Create</p>
-            </Link>
-          </div>
+          
         </div>
         <div className="menu2 example8">
           <span className="span" onClick={() => setShowFilterBar(false)}></span>
