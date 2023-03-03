@@ -56,7 +56,7 @@ const Pagination = () => {
                   <CardPokemon
                     name={p.name}
                     types={p.types}
-                    image={p.image}
+                    img={p.im}
                     hp={p.hp}
                     attack={p.attack}
                     defense={p.defense}

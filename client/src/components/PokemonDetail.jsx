@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import "./PokemonDetail.module.css";
-// import Loading from "../../assets/loading1.gif";
+ import Loading from "../img/Pokemon-gifs-13.gif";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPokemonById, clearPokemonById } from "../redux/actions/index";
-// import LOGO from "../../assets/logo.png";
+import { getPokemonById , clearPokemonById } from "../redux/actions/index";
+import LOGO2 from "../img/logo2.svg.webp";
 
 const PokemonDepth = () => {
   const dispatch = useDispatch();
@@ -16,19 +16,21 @@ const PokemonDepth = () => {
     dispatch(clearPokemonById());
   }, [dispatch, id]);
 
+ 
   if (pokemonByID.length === 0) {
     return (
       <div className="loading__id">
         <div>
-          {/* <img className="loadin__img" src={Loading} alt="Loading" /> */}
+          <img className="loadin__img" src={Loading} alt="Loading" />
         </div>
       </div>
     );
-  } else { 
+  } else {
+    // console.log(pokemonByID);
     return (
       <div className="container__pokemon">
         <div className="id__card">
-          {/* <img className="logo__id" src={LOGO} alt="Pokemon" /> */}
+          <img className="logo__id" src={LOGO2} alt="Pokemon" />
           <div>
             <div className="pokemon__id">
               <img
@@ -74,7 +76,7 @@ const PokemonDepth = () => {
                   <progress max="100" value={pokemonByID.weight}></progress>
                 </div>
               </div>
-             
+              {/* ========== */}
             </div>
           </div>
           <div className="type__poke">

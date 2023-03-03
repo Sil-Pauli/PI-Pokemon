@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link} from "react-router-dom";
-// import style from"./PokemonCreate.module.css";
+ import style from"./PokemonCreate.module.css";
 import Img from "../img/add_provisional.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemonTypes, addPokemon, clearState } from "../redux/actions/index";
@@ -69,12 +69,11 @@ const AddPokemon = () => {
   };
 
   return (
-    <section>
-      <h6>Let your imagination fly</h6>
-      <h2 className="title">Create Pokemon</h2>
-      <div className="container container__create">
+    <section className={style.container}>
+      <h2 className={style.titulo}>Crea tu Pokemon</h2>
+      <div className={style.container_create}>
         <form onSubmit={handleSubmit}>
-          <div className="textInputWrapper ">
+          <div className={style.textInputWrapper}>
             <input
               placeholder="Name"
               type="text"
@@ -83,10 +82,10 @@ const AddPokemon = () => {
               onChange={handleInputChange}
               value={input.name}
             />
-            {errors.name && <p className="p ">{errors.name}</p>}
+            {errors.name && <p className={style.p}>{errors.name}</p>}
           </div>
 
-          <div className="textInputWrapper">
+          <div className={style.textInputWrapper}>
             <input
               className="textInput"
               type="text"
@@ -95,9 +94,9 @@ const AddPokemon = () => {
               onChange={handleInputChange}
               value={input.image}
             ></input>
-            {errors.image && <p className="p">{errors.image}</p>}
+            {errors.image && <p className={style.p}>{errors.image}</p>}
           </div>
-          <div className="textInputWrapper">
+          <div className={style.textInputWrapper}>
             <select
               className="textInput"
               name="type1"
@@ -120,9 +119,9 @@ const AddPokemon = () => {
                     );
                   })}
             </select>
-            {errors.type1 && <p className="p">{errors.type1}</p>}
+            {errors.type1 && <p className={style.p}>{errors.type1}</p>}
           </div>
-          <div className="textInputWrapper">
+          <div className={style.textInputWrapper}>
             <select
               className="textInput"
               name="type2"
@@ -145,9 +144,9 @@ const AddPokemon = () => {
                     );
                   })}
             </select>
-            {errors.type2 && <p className="p">{errors.type2}</p>}
+            {errors.type2 && <p className={style.p}>{errors.type2}</p>}
           </div>
-          <div className="textInputWrapper">
+          <div className={style.textInputWrapper}>
             <input
               className="textInput"
               type="text"
@@ -156,9 +155,9 @@ const AddPokemon = () => {
               onChange={handleInputChange}
               value={input.height}
             ></input>
-            {errors.height && <p className="p">{errors.height}</p>}
+            {errors.height && <p className={style.p}>{errors.height}</p>}
           </div>
-          <div className="textInputWrapper">
+          <div className={style.textInputWrapper}>
             <input
               className="textInput"
               type="text"
@@ -167,9 +166,9 @@ const AddPokemon = () => {
               onChange={handleInputChange}
               value={input.weight}
             ></input>
-            {errors.weight && <p className="p">{errors.weight}</p>}
+            {errors.weight && <p className={style.p}>{errors.weight}</p>}
           </div>
-          <div className="textInputWrapper">
+          <div className={style.textInputWrapper}>
             <input
               className="textInput"
               type="text"
@@ -178,9 +177,9 @@ const AddPokemon = () => {
               onChange={handleInputChange}
               value={input.hp}
             ></input>
-            {errors.hp && <p className="p">{errors.hp}</p>}
+            {errors.hp && <p className={style.p}>{errors.hp}</p>}
           </div>
-          <div className="textInputWrapper">
+          <div className={style.textInputWrapper}>
             <input
               className="textInput"
               type="text"
@@ -189,9 +188,9 @@ const AddPokemon = () => {
               onChange={handleInputChange}
               value={input.attack}
             ></input>
-            {errors.attack && <p className="p">{errors.attack}</p>}
+            {errors.attack && <p className={style.p}>{errors.attack}</p>}
           </div>
-          <div className="textInputWrapper">
+          <div className={style.textInputWrapper}>
             <input
               className="textInput"
               type="text"
@@ -200,9 +199,9 @@ const AddPokemon = () => {
               onChange={handleInputChange}
               value={input.defense}
             ></input>
-            {errors.defense && <p className="p">{errors.defense}</p>}
+            {errors.defense && <p className={style.p}>{errors.defense}</p>}
           </div>
-          <div className="textInputWrapper">
+          <div className={style.textInputWrapper}>
             <input
               className="textInput"
               type="text"
@@ -211,57 +210,57 @@ const AddPokemon = () => {
               onChange={handleInputChange}
               value={input.speed}
             ></input>
-            {errors.speed && <p className="p">{errors.speed}</p>}
+            {errors.speed && <p className={style.p}>{errors.speed}</p>}
           </div>
         </form>
-        <div className="pre">
-          <article className="item__create">
-            <div className="image">
+        <div className={style.pre}>
+          <article className={style.item_create}>
+            <div className={style.image}>
               {input.image ? (
                 <img
-                  className="img-size"
+                  className={style.img_size}
                   src={input.image}
                   alt={input.name}
                 ></img>
               ) : (
-                <img className="img-size" src={Img} alt="New Pokemon"></img>
+                <img className={style.img_size} src={Img} alt="New Pokemon"></img>
               )}
 
-              <div className="container-name">
+              <div className={style.container_name}>
                 {input.name && <h3>{input.name}</h3>}
               </div>
               {input.height && (
-                <div className="container-view">
+                <div className={style.container_view}>
                   <p>height {input.height}</p>
                   <progress max="100" value={input.height}></progress>
                 </div>
               )}
               {input.weight && (
-                <div className="container-view">
+                <div className={style.container_view}>
                   <p>weight {input.weight}</p>
                   <progress max="100" value={input.weight}></progress>
                 </div>
               )}
               {input.hp && (
-                <div className="container-view">
+                <div className={style.container_view}>
                   <p>health {input.hp}</p>
                   <progress max="100" value={input.hp}></progress>
                 </div>
               )}
               {input.attack && (
-                <div className="container-view">
+                <div className={style.container_view}>
                   <p>attack {input.attack}</p>
                   <progress max="100" value={input.attack}></progress>
                 </div>
               )}
               {input.defense && (
-                <div className="container-view">
+                <div className={style.container_view}>
                   <p>defense {input.defense}</p>
                   <progress max="100" value={input.defense}></progress>
                 </div>
               )}
               {input.speed && (
-                <div className="container-view">
+                <div className={style.container_view}>
                   <p>speed {input.speed}</p>
                   <progress max="100" value={input.speed}></progress>
                 </div>
@@ -270,21 +269,21 @@ const AddPokemon = () => {
           </article>
         </div>
       </div>
-      <div className="position_x">
+      <div className={style.position_x}>
         {Object.keys(errors).length !== 0 ? (
-          <spam disabled="true" onClick={finishedForm} className="buttonx ">
-            Complete the form
+          <spam disabled="true" onClick={finishedForm} className={style.buttonx}>
+            Complete el formulario
           </spam>
         ) : (
-          <button className="buttonDark" onClick={handleSubmit}>
-            Create
+          <button className={style.buttonDark} onClick={handleSubmit}>
+            Crear
           </button>
         )}
       </div>
       {/* {isCreated && <CreateOk />} */}
-      <div className="btn-position">
+      <div className={style.button}>
         <Link to="/home">
-          <button className="buttonDark">Home</button>
+          <button>Home</button>
         </Link>
       </div>
     </section>
