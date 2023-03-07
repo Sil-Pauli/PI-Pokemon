@@ -2,11 +2,12 @@ import React from 'react';
 import styles from'./CardPokemon.module.css';
 
 
-const CardPokemon = ({ name, types, image}) => {
+const CardPokemon = ({ name, types, img}) => {
+  console.log(img)
   return (
     <div className={styles.card}>
        <h3 className={styles.name}>{name}</h3>
-          <img src={image} alt='images' className={styles.img}/>
+          <img src={img} alt='images' className={styles.img}/>
             <ul className={styles.typeStyle}>
               <li className={styles.type}>
                 {typeof types[0] === 'string'

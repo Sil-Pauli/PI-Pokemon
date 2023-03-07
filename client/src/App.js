@@ -10,10 +10,10 @@ function App() {
     
     <div className='App'>
       <Routes>
-        <Route exact path="/" element={<LandingPage/>} />
-        <Route exact path="/home" element={<Home/>} />
-        <Route path="/pokemon/:id" element={<PokemonDetail/>} />
-        <Route path="/create" element={<PokemonCreate/>} /> 
+        <Route exact path='/' element={<LandingPage/>} />
+        <Route exact path='/home' element={<Home/>} />
+        <Route path='/home/:id' element={<PokemonDetail/>} />
+        <Route path='/create' element={<PokemonCreate/>} /> 
         </Routes>  
         </div>
     

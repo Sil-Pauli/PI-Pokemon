@@ -1,16 +1,21 @@
-.container{
-   background: linear-gradient(to right, #F3E60C,#6ca1d3,#F78C22,#68BD56);
-   display: flex;
-   background-position: bottom center;
+.container1{
+   /* fondo */
+    background: linear-gradient( rgba(93, 105, 128, 0.7),rgba(24, 25, 46, 0.7)),url('../img/fondo3.jpeg');
     background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
     color: white;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
+   
 }
+
+/* hace la barra gris y acomoda los botones crear, buscar y logo */
 .container header{
-    background-color:rgba(255, 255, 255, 0.4);
+    background-color:rgba(255, 255, 255, 0.2);
     position: fixed;
     width: 100%;
     z-index: 100;
@@ -21,27 +26,41 @@
     align-items:center;
     padding:5px 3%;
 }
-img {
-    max-width:15rem ;   
-    height: auto;
+
+.filtro{
+    padding:30px 15%;
+display: flex;
+align-items: center;
+justify-content: space-between;
 }
 
- .menu{
-  display: flex;
-  margin-left: 55px;
-    list-style-type: none; 
-      left: 0; 
-      padding: .5em;
-      color: #ffffff;
-      transition: all .3s ease-out;
-      text-decoration: none;
+.button {
+   background-position: center center;
+    background-color: transparent;
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    border-radius: 30px;
+    border: 1px solid #ffffff;
+    padding: 6px 35px 6px 35px;
+    transition: .5s;
+}
+ .button:hover{
+  background-color:  #ff4f61;
+  color: #fff;
+  border:#ff4f61;
  }
- .menu :hover{
-    cursor: pointer;
-    text-decoration: underline;
-    
+
+ div select {
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+    padding: 6px 35px 6px 35px;
+
+    border: none;
+    color: #511d47;
+    outline: none;
   }
-  .menu :active{
-    background-color: #ffffff;
-    color: rgba(52, 73, 94,1.0);
+  div select:hover{
+    background-color: #511d47;
+    color: #fff;
   }

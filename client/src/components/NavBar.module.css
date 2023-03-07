@@ -1,0 +1,42 @@
+.logo {
+    width:150px;
+    float: left;
+    margin-left: 20px;
+    margin-top: 35px;
+    justify-content: center;
+    align-items: center;
+    /* margin-bottom: 30px; */
+    transform: translate(0px,-18px)
+  }
+  
+  .header {
+    display: flex;
+    overflow: hidden;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.2);
+  color: white;
+  margin: auto;
+  justify-content: space-between;
+  align-items:center;
+  padding:5px 3%;
+  }
+
+.button2{
+  background-color: transparent;
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    border-radius: 30px;
+    border: 1px solid #ffffff;
+    padding: 6px 35px 6px 35px;
+   
+    transition: .5s;
+}
+ .button2:hover{
+  background-color:  #ff4f61;
+  color: #fff;
+  border:#ff4f61;
+ }
+
+
+  

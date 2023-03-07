@@ -1,96 +1,104 @@
-import React, { useEffect } from "react";
-import "./PokemonDetail.module.css";
- import Loading from "../img/Pokemon-gifs-13.gif";
-import { Link, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getPokemonById , clearPokemonById } from "../redux/actions/index";
-import LOGO2 from "../img/logo2.svg.webp";
+import React from 'react';
+import { Link,useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPokemonDetail } from '../redux/actions';
+import styles from './PokemonDetail.module.css';
+import Logo1 from '../img/logo2.svg.webp';
 
-const PokemonDepth = () => {
+
+const PokemonDetails = () => {
   const dispatch = useDispatch();
-  const pokemonByID = useSelector((state) => state.pokemonById);
-  let { id } = useParams();
+  const { id } = useParams();
+  const pokemonDetails = useSelector((state) => state.detail);
+
+
 
   useEffect(() => {
-    dispatch(getPokemonById(id));
-    dispatch(clearPokemonById());
+    dispatch(getPokemonDetail(id));
+    return ()=> {dispatch(getPokemonDetail())}
   }, [dispatch, id]);
 
- 
-  if (pokemonByID.length === 0) {
-    return (
-      <div className="loading__id">
-        <div>
-          <img className="loadin__img" src={Loading} alt="Loading" />
-        </div>
-      </div>
-    );
-  } else {
-    // console.log(pokemonByID);
-    return (
-      <div className="container__pokemon">
-        <div className="id__card">
-          <img className="logo__id" src={LOGO2} alt="Pokemon" />
+
+  return (
+    <div className={styles.container}>
+       <Link to='/home'>
+          <img  className={styles.logo} src={ Logo1 } alt='pkh' />
+        </Link>
+      
+
+    <div>
+    {pokemonDetails.length ? (
+      pokemonDetails.map((p) => (
+        <Link key={p.id} to={`/home/${p.id}`}>
           <div>
-            <div className="pokemon__id">
-              <img
-                className="size__img"
-                src={pokemonByID.image}
-                alt={pokemonByID.name}
-              />
+            <h1 className={styles.names}>{p.name}</h1>
+            <h2 className={styles.id}>#{p.id}</h2>
+          </div>
+          <div className={styles.detail}>
+            <img  className={styles.image} src={p.img} alt='PokeImg' width='250px' height='250px' />
+            {p.types.length === 2 ? (
+              <div>
+                <h3 className={styles.type1}>
+                <ul className={styles.type}>
+                  <li>
+                    {
+                    typeof p.types[0] === 'string' ? p.types[0] : p.types[0]?.name}~
+                     {
+                     typeof p.types[1] === 'string' ? p.types[1] : p.types[1]?.name}
+                  </li>
+                </ul>
+                </h3>
+              </div>
+            ) : (
+              <div>
+                <h3 className={styles.type2}>{
+                typeof p.types[0] === 'string' ? p.types[0] : p.types[0]?.name}</h3>
+              </div>
+            )} 
+            <div>
+            <div className={styles.list}>
+            <div>
+              <p> hp {p.hp}</p>
+              <progress max='250' value={p.hp}></progress>
             </div>
-            <div className="item">
-              <div className="letras__chinas">
-                <p>ポケットモンスター</p>
-              </div>
-              <div className="id">
-                <h1>#{pokemonByID.id}</h1>
-              </div>
-              <div className="name_id">
-                <h2>{pokemonByID.name}</h2>
-              </div>
-              {/* ================= */}
-              <div className="details_poke">
-                <div>
-                  <p className="emojis"> health {pokemonByID.hp}</p>
-                  <progress max="100" value={pokemonByID.hp}></progress>
-                </div>
-                <div>
-                  <p className="emojis">speed {pokemonByID.speed}</p>
-                  <progress max="100" value={pokemonByID.speed}></progress>
-                </div>
-                <div>
-                  <p className="emojis">attack {pokemonByID.attack}</p>
-                  <progress max="100" value={pokemonByID.attack}></progress>
-                </div>
-                <div>
-                  <p className="emojis"> defense {pokemonByID.defense}</p>
-                  <progress max="100" value={pokemonByID.defense}></progress>
-                </div>
-                <div>
-                  <p className="emojis"> height {pokemonByID.height}</p>
-                  <progress max="100" value={pokemonByID.height}></progress>
-                </div>
-                <div>
-                  <p className="emojis"> weight {pokemonByID.weight}</p>
-                  <progress max="100" value={pokemonByID.weight}></progress>
-                </div>
-              </div>
-              {/* ========== */}
+            <div>
+              <p> attack {p.attack}</p>
+              <progress max='250' value={p.attack}></progress>
+            </div>
+            <div>
+              <p> defense {p.defense}</p>
+              <progress max='250' value={p.defense}></progress>
+            </div>
+            <div>
+              <p> speed {p.speed}</p>
+              <progress max='250' value={p.speed}></progress>
+            </div>
+            <div>
+              <p> height {p.height}</p>
+              <progress max='100' value={p.height}></progress>
+            </div>
+            <div>
+              <p> weight {p.weight}</p>
+              <progress max='1000' value={p.weight}></progress>
+            </div>
             </div>
           </div>
-          <div className="type__poke">
-            {pokemonByID.types &&
-              pokemonByID.types.map((type) => <h5>{type.name}</h5>)}
           </div>
-          <div className="btn__position">
-            <Link to="/home">
-              <button className="buttonDark">Home</button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-};
-export default PokemonDepth;
+        </Link>
+      ))
+    ) : (
+      <img
+        src={'https://static.wixstatic.com/media/20abc5_e58061f333744c2899c375ec7f024eb3~mv2.gif'}
+        width='250px' height='300px'
+        alt='Not found'
+      />
+    )}
+  </div><div className={styles.back}>
+      <Link to='/home' className={styles.letter}> Back </Link> 
+    </div>
+  </div>
+  )
+}
+  
+export default PokemonDetails

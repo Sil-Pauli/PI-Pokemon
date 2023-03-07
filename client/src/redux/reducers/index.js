@@ -1,130 +1,96 @@
+import { GET_ALL_POKEMON,
+  GET_POKEMON_NAME,
+  GET_POKEMON_TYPES,
+  GET_POKEMON_DETAIL,
+  FILTER_BY_TYPE,
+  FILTER_BY_CREATED,
+  FILTER_BY_ATTACK,
+  ORDER_BY_NAME,
+  POST_POKEMON,
+  } from '../actions';
+
 const initialState = {
-  allPokemons: [],
-  filteredPokemons: [],
-  addedPokemon: false,
-  pokemonById: [],
-  pokemonTypes: [],
+pokemon:[],
+allPokemon:[],
+types:[],
+detail:[]
 };
 
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "GET_ALL_POKEMONS":
-      return {
-        ...state,
-        allPokemons: action.payload,
-        filteredPokemons: action.payload,
-      };
-    case "ADD_POKEMON":
-      return {
-        ...state,
-        addedPokemon: action.payload,
-      };
-    case "CLEAR_POKEMON_BY_ID":
-      return {
-        ...state,
-        pokemonById: [],
-      };
-    case "CLEAR_STATE":
-      return {
-        ...state,
-        filteredPokemons: state.allPokemons,
-        addedPokemon: false,
-      };
-    case "FILTER_BY_TYPE":
-      const typeFiltered = state.allPokemons.filter((p) => {
-        return p.types.some((type) => type.name === action.payload);
-      });
-      if (typeFiltered.length) {
-        return {
-          ...state,
-          filter: true,
-          filteredPokemons: typeFiltered,
-        };
-      } else {
-        return {
-          ...state,
-          filteredPokemons: false,
-        };
-      }
-
-    case "FILTER_BY_CREATOR":
-      const filteredCreator = state.allPokemons.filter((p) => {
-        return p.created.toString() === action.payload;
-      });
-      if (filteredCreator.length) {
-        return {
-          ...state,
-          filteredPokemons: filteredCreator,
-        };
-      } else {
-        return {
-          ...state,
-          filteredPokemons: false,
-        };
-      }
-    case "GET_POKEMON_BY_ID":
-      return {
-        ...state,
-        pokemonById: action.payload,
-      };
-    case "GET_POKEMON_BY_NAME":
-      let search;
-      if (action.payload.length === 0) {
-        search = ["error"];
-      } else {
-        search = action.payload;
-      }
-      return {
-        ...state,
-        filteredPokemons: search,
-      };
-
-    case "GET_POKEMON_TYPES":
-      return {
-        ...state,
-        pokemonTypes: [...action.payload],
-      };
-
-    case "ORDER_ASCENDING":
-      return {
-        ...state,
-        filteredPokemons: state.filteredPokemons.sort((a, b) => {
-          if (a.name < b.name) return -1;
-          if (a.name > b.name) return 1;
-          return 0;
-        }),
-      };
-    case "ORDER_DESCENDING":
-      return {
-        ...state,
-        filteredPokemons: state.filteredPokemons.sort((a, b) => {
-          if (a.name > b.name) return -1;
-          if (a.name < b.name) return 1;
-          return 0; //si son iguales te lo deja como esta
-        }),
-      };
-    case "ORDER_ATTACK_ASCENDING":
-      return {
-        ...state,
-        filteredPokemons: state.filteredPokemons.sort((a, b) => {
-          if (a.attack > b.attack) return -1;
-          if (a.attack < b.attack) return 1;
-          return 0;
-        }),
-      };
-    case "ORDER_ATTACK_DESCENDING":
-      return {
-        ...state,
-        filteredPokemons: state.filteredPokemons.sort((a, b) => {
-          if (a.attack < b.attack) return -1;
-          if (a.attack > b.attack) return 1;
-          return 0;
-        }),
-      };
-
-    default:
-      return state;
-  }
+export default function rootReducer(state = initialState, action) {
+switch (action.type) {
+case GET_ALL_POKEMON:
+return {
+...state,
+pokemon: action.payload,
+allPokemon: action.payload
 };
-
-export default rootReducer;
+case GET_POKEMON_NAME:
+return {
+  ...state,
+  pokemon: action.payload
+};
+case GET_POKEMON_TYPES:
+return {
+  ...state,
+  types: action.payload
+};
+case GET_POKEMON_DETAIL:
+return {
+  ...state,
+  detail: action.payload
+};
+case FILTER_BY_TYPE:
+  const allPokemon = state.allPokemon;
+  const typeFilter = action.payload === 'type'
+  ? allPokemon
+  : allPokemon.filter((t) => t.types.includes(action.payload));
+  return {
+    ...state,
+    pokemon: typeFilter
+  };
+  case FILTER_BY_CREATED:
+    const createdFilter = action.payload === 'created'
+    ? state.allPokemon.filter(p => p.createdInDb)
+    : state.allPokemon.filter(p => !p.createdInDb);
+    return {
+      ...state,
+      pokemon: action.payload === 'all' ? state.allPokemon : createdFilter
+    };
+    case FILTER_BY_ATTACK:
+      let attackFilter = [...state.pokemon];
+      attackFilter = attackFilter.sort((a, b) => {
+        if (a.attack < b.attack) {
+          return action.payload === 'more aggressive' ? 1 : -1;
+        }
+        if (a.attack > b.attack) {
+          return action.payload === 'more aggressive' ? -1 : 1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        pokemon: action.payload === 'attack' ? state.allPokemon : attackFilter
+      };
+      case ORDER_BY_NAME:
+        let orderName = [...state.pokemon];
+        orderName = orderName.sort((a, b) => {
+          if (a.name< b.name) {
+            return action.payload === 'asc' ? -1 : 1;
+          }
+          if (a.name> b.name) {
+            return action.payload === 'asc' ? 1 : -1;
+          }
+          return 0;
+        });
+        return {
+          ...state,
+          pokemon: action.payload === 'name' ? state.allPokemon : orderName
+        };
+      case POST_POKEMON:
+        return {
+          ...state
+        };
+      
+default: return {...state};
+};
+};
