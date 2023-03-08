@@ -14,6 +14,7 @@ pokemon:[],
 allPokemon:[],
 types:[],
 detail:[]
+
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -57,20 +58,24 @@ case FILTER_BY_TYPE:
       pokemon: action.payload === 'all' ? state.allPokemon : createdFilter
     };
     case FILTER_BY_ATTACK:
-      let attackFilter = [...state.pokemon];
-      attackFilter = attackFilter.sort((a, b) => {
-        if (a.attack < b.attack) {
-          return action.payload === 'more aggressive' ? 1 : -1;
-        }
-        if (a.attack > b.attack) {
-          return action.payload === 'more aggressive' ? -1 : 1;
-        }
-        return 0;
-      });
+      // let attackFilter = [...state.pokemon];
+      const filtermenos60=action.payload==='ataque -60'
+      ?state.allPokemon.filter(p=>p.attack <= 60 && p.attack)
+      :state.allPokemon.filter(p=>p.attack>=60&&p.attack)
+     
+      // attackFilter = attackFilter.sort((a, b) => {
+      //   if (a.attack < b.attack) {
+      //     return action.payload === 'more aggressive' ? 1 : -1;
+      //   }
+      //   if (a.attack > b.attack) {
+      //     return action.payload === 'more aggressive' ? -1 : 1;
+      //   }
+      
+      //   return 0;
+      // });
       return {
         ...state,
-        pokemon: action.payload === 'attack' ? state.allPokemon : attackFilter
-      };
+        pokemon: action.payload === 'attack' ? state.allPokemon : filtermenos60 }
       case ORDER_BY_NAME:
         let orderName = [...state.pokemon];
         orderName = orderName.sort((a, b) => {

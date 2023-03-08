@@ -3,7 +3,7 @@ import styles from'./CardPokemon.module.css';
 
 
 const CardPokemon = ({ name, types, img}) => {
-  console.log(img)
+  console.log(types)
   return (
     <div className={styles.card}>
        <h3 className={styles.name}>{name}</h3>

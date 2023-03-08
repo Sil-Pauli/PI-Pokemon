@@ -19,7 +19,7 @@ const validationRules = {
     pattern: stringRegExp,
     errorMessage: 'Required name format: lowercase, - and length 1-20'
   },
-  image: {
+  img: {
     required: true,
     pattern: urlRegExp,
     errorMessage: 'Required URL format'
@@ -95,7 +95,7 @@ const PokemonCreate = () => {
     speed: '',
     height: '',
     weight: '',
-    image: '',
+    img: '',
     types: [],
   });
   
@@ -151,7 +151,7 @@ const PokemonCreate = () => {
           speed: '',
           height: '',
           weight: '',
-          image: '',
+          img: '',
           types: [],
         })
         navigate.push('/home');
@@ -182,16 +182,16 @@ const PokemonCreate = () => {
           </div>
 
           <div>
-            <label htmlFor='image'>Imagen: </label>
+            <label htmlFor='img'>Imagen: </label>
               <input
                 type='text'
-                id='image'
-                name='image'
-                value={input.image}
+                id='img'
+                name='img'
+                value={input.img}
                 className={styles.input}
                 onChange={(e) => handleInputChange(e)}
                 />
-                {errors.image && <p className={styles.error}> {errors.image}</p>}
+                {errors.img && <p className={styles.error}> {errors.img}</p>}
           </div>
 
           <div>

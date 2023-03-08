@@ -6,13 +6,10 @@ import { getPokemonDetail } from '../redux/actions';
 import styles from './PokemonDetail.module.css';
 import Logo1 from '../img/logo2.svg.webp';
 
-
 const PokemonDetails = () => {
-  const dispatch = useDispatch();
-  const { id } = useParams();
+const dispatch = useDispatch();
+const { id } = useParams();
   const pokemonDetails = useSelector((state) => state.detail);
-
-
 
   useEffect(() => {
     dispatch(getPokemonDetail(id));
@@ -21,6 +18,7 @@ const PokemonDetails = () => {
 
 
   return (
+    
     <div className={styles.container}>
        <Link to='/home'>
           <img  className={styles.logo} src={ Logo1 } alt='pkh' />
@@ -31,7 +29,8 @@ const PokemonDetails = () => {
     {pokemonDetails.length ? (
       pokemonDetails.map((p) => (
         <Link key={p.id} to={`/home/${p.id}`}>
-          <div>
+            console.log (p.type)<div>
+          
             <h1 className={styles.names}>{p.name}</h1>
             <h2 className={styles.id}>#{p.id}</h2>
           </div>
@@ -43,9 +42,9 @@ const PokemonDetails = () => {
                 <ul className={styles.type}>
                   <li>
                     {
-                    typeof p.types[0] === 'string' ? p.types[0] : p.types[0]?.name}~
+                      typeof p.types[0] === 'string' ? p.types[0] : p.types[0]?.name}~
                      {
-                     typeof p.types[1] === 'string' ? p.types[1] : p.types[1]?.name}
+                       typeof p.types[1] === 'string' ? p.types[1] : p.types[1]?.name}
                   </li>
                 </ul>
                 </h3>
@@ -53,7 +52,7 @@ const PokemonDetails = () => {
             ) : (
               <div>
                 <h3 className={styles.type2}>{
-                typeof p.types[0] === 'string' ? p.types[0] : p.types[0]?.name}</h3>
+                  typeof p.types[0] === 'string' ? p.types[0] : p.types[0]?.name}</h3>
               </div>
             )} 
             <div>
@@ -87,18 +86,20 @@ const PokemonDetails = () => {
           </div>
         </Link>
       ))
-    ) : (
-      <img
-        src={'https://static.wixstatic.com/media/20abc5_e58061f333744c2899c375ec7f024eb3~mv2.gif'}
+      ) : (
+        <div> 
+        
+       <img src={'https://static.wixstatic.com/media/20abc5_e58061f333744c2899c375ec7f024eb3~mv2.gif'}
         width='250px' height='300px'
         alt='Not found'
-      />
-    )}
+        /></div> 
+        )
+        }
   </div><div className={styles.back}>
       <Link to='/home' className={styles.letter}> Back </Link> 
     </div>
   </div>
   )
 }
-  
+  //console.log(PokemonDetails)
 export default PokemonDetails

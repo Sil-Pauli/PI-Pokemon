@@ -13,6 +13,7 @@ import CardPokemon from './CardPokemon';
 import styles from './Home.module.css';
 import Pagination from './Pagination';
 import NavBar from './NavBar';
+//import PokemonCreate from './PokemonCreate';
 
 
 export default function Home() {
@@ -93,6 +94,7 @@ export default function Home() {
           </select> 
           <select onChange={(e) => handleFilterAttack(e)} value={order}>
             <option value='attack'>Ataque</option>
+            <option value='ataque -60'>Ataque -60</option>
             <option value='more aggressive'>Más Agresivo</option>
             <option value='less aggresive'>Menos Agresivo</option>
           </select>
@@ -117,12 +119,16 @@ export default function Home() {
             currentPage={currentPage}
           />
           {currentPokemon?.map((p) => {
-            console.log(p.img)
+           
             return (
               <Fragment key={p.id}>
                 <Link to={`/home/${p.id}`} className={styles.cardpoke}>
-
+                  {/* <PokemonCreate/>
+                  name={p.name}
+                    img={p.img}
+                    types={p.types} */}
                   <CardPokemon 
+                 
                     name={p.name}
                     img={p.img}
                     types={p.types}
